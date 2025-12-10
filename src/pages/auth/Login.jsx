@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { FiUser, FiLock, FiDollarSign } from 'react-icons/fi';
+import { FiUser, FiLock, FiDollarSign, FiMail } from 'react-icons/fi';
+import logo from '../../assets/logo.png';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -49,7 +50,7 @@ const Login = () => {
                 {/* Logo */}
                 <div className="text-center mb-8">
                     <img
-                        src="/uni-logo.png"
+                        src={logo}
                         alt="UniCash"
                         className="w-48 h-auto mx-auto"
                     />
@@ -67,7 +68,7 @@ const Login = () => {
                     {/* Email Input */}
                     <div className="relative">
                         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
-                            <FiUser className="w-5 h-5" />
+                            <FiMail className="w-5 h-5" />
                         </div>
                         <input
                             type="email"

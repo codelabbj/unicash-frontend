@@ -3,6 +3,7 @@ import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { authAPI } from '../../api/auth.api';
 import { FiCheckCircle, FiDollarSign } from 'react-icons/fi';
+import logo from '../../assets/logo.png';
 
 const VerifyEmail = () => {
     const { state } = useLocation();
@@ -75,7 +76,7 @@ const VerifyEmail = () => {
                 {/* Logo */}
                 <div className="text-center mb-6">
                     <img
-                        src="/uni-logo.png"
+                        src={logo}
                         alt="UniCash"
                         className="w-48 h-auto mx-auto mb-2"
                     />

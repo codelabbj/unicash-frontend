@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { authAPI } from '../../api/auth.api';
 import { FiDollarSign, FiMail, FiCheckCircle } from 'react-icons/fi';
+import logo from '../../assets/logo.png';
 
 const PasswordReset = () => {
     const [email, setEmail] = useState('');
@@ -64,7 +65,7 @@ const PasswordReset = () => {
                 {/* Logo */}
                 <div className="text-center mb-6">
                     <img
-                        src="/uni-logo.png"
+                        src={logo}
                         alt="UniCash"
                         className="w-48 h-auto mx-auto mb-2"
                     />

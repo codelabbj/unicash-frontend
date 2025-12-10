@@ -4,6 +4,8 @@ import {
 } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
 
+import logo from '../../assets/logo.png';
+
 const Sidebar = ({ onClose }) => {
     const { user, logout } = useAuth();
 
@@ -18,12 +20,7 @@ const Sidebar = ({ onClose }) => {
         <div className="h-full flex flex-col bg-white">
             {/* Logo & Close Button */}
             <div className="flex items-center justify-between p-6 border-b border-gray-100">
-                <h1 className="text-2xl font-bold">
-                    <span className="text-gray-300">UNI</span>
-                    <span className="text-primary">CA</span>
-                    <span className="text-primary">$</span>
-                    <span className="text-gray-300">H</span>
-                </h1>
+                <img src={logo} alt="UniCash" className="h-12 w-auto" />
                 {onClose && (
                     <button onClick={onClose} className="md:hidden text-gray-500 hover:text-gray-700">
                         <FiX className="w-6 h-6" />

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { FiUser, FiLock, FiMail, FiPhone, FiDollarSign } from 'react-icons/fi';
+import logo from '../../assets/logo.png';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -54,7 +55,7 @@ const Register = () => {
                 {/* Logo */}
                 <div className="text-center mb-6">
                     <img
-                        src="/uni-logo.png"
+                        src={logo}
                         alt="UniCash"
                         className="w-48 h-auto mx-auto mb-2"
                     />
