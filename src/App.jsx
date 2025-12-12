@@ -13,6 +13,7 @@ import Dashboard from './pages/Dashboard';
 import NewTransaction from './pages/transaction/NewTransaction';
 import TransactionHistory from './pages/transaction/TransactionHistory';
 import Profile from './pages/Profile';
+import Notifications from './pages/Notifications';
 
 function App() {
   return (
@@ -54,11 +55,11 @@ function App() {
           />
 
           {/* Private Routes */}
-          {/* Private Routes */}
           <Route element={<PrivateRoute><MainLayout /></PrivateRoute>}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/transaction/new" element={<NewTransaction />} />
             <Route path="/transactions" element={<TransactionHistory />} />
+            <Route path="/notifications" element={<Notifications />} />
             <Route path="/profile" element={<Profile />} />
           </Route>
 

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { FiSend, FiList, FiTrendingUp, FiCheckCircle } from 'react-icons/fi';
 import StatisticsCard from '../components/dashboard/StatisticsCard';
 import RecentTransactions from '../components/dashboard/RecentTransactions';
+import { getRecentTransactions } from '../utils/mockData';
 
 const Dashboard = () => {
     // Mock data - to be replaced with API call
@@ -11,21 +12,18 @@ const Dashboard = () => {
         successRate: '98%'
     };
 
-    const recentTransactions = [
-        { uid: 1, type: 'DEBIT', recipient: 'MTN Benin (John Doe)', amount: '5 000', date: '2023-10-25', status: 'SUCCESS' },
-        { uid: 2, type: 'DEBIT', recipient: 'Moov Benin (Jane Smith)', amount: '2 500', date: '2023-10-24', status: 'PENDING' },
-        { uid: 3, type: 'DEBIT', recipient: 'Orange Money (Ali)', amount: '10 000', date: '2023-10-20', status: 'FAILED' },
-    ];
+    const recentTransactions = getRecentTransactions(5);
 
     return (
         <div className="space-y-6">
-            <div className="flex justify-between items-center">
-                <h1 className="text-2xl font-bold text-gray-800">Vue d'ensemble</h1>
+            <div className="flex justify-between items-center gap-4">
+                <h1 className="text-2xl font-bold text-gray-800 truncate">Vue d'ensemble</h1>
                 <Link
                     to="/transaction/new"
-                    className="bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors shadow-sm"
+                    className="bg-primary hover:bg-primary-hover text-white px-3 py-2 md:px-4 md:py-2 rounded-lg font-medium flex items-center gap-2 transition-colors shadow-sm whitespace-nowrap text-sm md:text-base"
                 >
-                    <FiSend /> Nouvelle Transaction
+                    <FiSend size={18} />
+                    <span className="hidden sm:inline">Nouvelle Transaction</span>
                 </Link>
             </div>
 

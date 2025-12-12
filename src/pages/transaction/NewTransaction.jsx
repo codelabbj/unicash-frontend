@@ -54,10 +54,7 @@ const NewTransaction = () => {
     }, [amount]);
 
     const onSubmit = async (data) => {
-        if (data.source_network === data.destination_network) {
-            setError('Le réseau source et destination ne peuvent pas être identiques.');
-            return;
-        }
+        // Restriction removed to allow same-network transfers as per new requirements
 
         setIsLoading(true);
         setError('');
@@ -139,6 +136,28 @@ const NewTransaction = () => {
                                     </div>
                                     {errors.source_number && <span className="text-red-500 text-xs">{errors.source_number.message}</span>}
                                 </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-600 mb-1">Confirmer Numéro</label>
+                                    <div className="relative">
+                                        <FiSmartphone className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                                        <input
+                                            type="tel"
+                                            placeholder="Répétez le numéro"
+                                            onPaste={(e) => e.preventDefault()}
+                                            {...register('source_number_confirm', {
+                                                required: 'Confirmation requise',
+                                                validate: (val) => {
+                                                    if (watch('source_number') != val) {
+                                                        return "Les numéros ne correspondent pas";
+                                                    }
+                                                }
+                                            })}
+                                            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-primary"
+                                        />
+                                    </div>
+                                    {errors.source_number_confirm && <span className="text-red-500 text-xs">{errors.source_number_confirm.message}</span>}
+                                </div>
                             </div>
 
                             {/* Destination */}
@@ -178,6 +197,29 @@ const NewTransaction = () => {
                                     </div>
                                     {errors.destination_number && <span className="text-red-500 text-xs">{errors.destination_number.message}</span>}
                                 </div>
+
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-600 mb-1">Confirmer Numéro</label>
+                                    <div className="relative">
+                                        <FiSmartphone className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                                        <input
+                                            type="tel"
+                                            placeholder="Répétez le numéro"
+                                            onPaste={(e) => e.preventDefault()}
+                                            {...register('destination_number_confirm', {
+                                                required: 'Confirmation requise',
+                                                validate: (val) => {
+                                                    if (watch('destination_number') != val) {
+                                                        return "Les numéros ne correspondent pas";
+                                                    }
+                                                }
+                                            })}
+                                            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-primary"
+                                        />
+                                    </div>
+                                    {errors.destination_number_confirm && <span className="text-red-500 text-xs">{errors.destination_number_confirm.message}</span>}
+                                </div>
+
                             </div>
                         </div>
 

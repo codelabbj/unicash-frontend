@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { FiSearch, FiFilter, FiArrowDownLeft, FiArrowUpRight, FiClock, FiCheckCircle, FiXCircle } from 'react-icons/fi';
+import { FiSearch, FiFilter, FiRepeat, FiClock, FiCheckCircle, FiXCircle } from 'react-icons/fi';
 import { transactionAPI } from '../../api/transaction.api';
+import { mockTransactions } from '../../utils/mockData';
 
 const TransactionHistory = () => {
     const [transactions, setTransactions] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [filter, setFilter] = useState('ALL'); // ALL, SENT, RECEIVED
+    const [filter, setFilter] = useState('ALL'); // ALL, SUCCESS, PENDING, FAILED
 
     useEffect(() => {
         const fetchTransactions = async () => {
@@ -15,12 +16,7 @@ const TransactionHistory = () => {
             } catch (err) {
                 console.error('Error fetching transactions', err);
                 // Mock data for demo if API fails
-                setTransactions([
-                    { uid: 1, type: 'DEBIT', recipient: 'MTN Benin', amount: '5000', date: '2023-10-25T10:00:00', status: 'SUCCESS', reference: 'TX123456789' },
-                    { uid: 2, type: 'DEBIT', recipient: 'Moov Benin', amount: '2500', date: '2023-10-24T14:30:00', status: 'PENDING', reference: 'TX987654321' },
-                    { uid: 3, type: 'DEBIT', recipient: 'Orange', amount: '10000', date: '2023-10-20T09:15:00', status: 'FAILED', reference: 'TX456123789' },
-                    { uid: 4, type: 'DEBIT', recipient: 'Celtiis', amount: '1000', date: '2023-10-18T18:45:00', status: 'SUCCESS', reference: 'TX789123456' },
-                ]);
+                setTransactions(mockTransactions);
             } finally {
                 setIsLoading(false);
             }
@@ -37,6 +33,10 @@ const TransactionHistory = () => {
         }
     };
 
+    const getTransactionColor = () => {
+        return 'bg-blue-50 text-primary';
+    };
+
     const getStatusIcon = (status) => {
         switch (status) {
             case 'SUCCESS': return <FiCheckCircle className="w-4 h-4" />;
@@ -49,7 +49,7 @@ const TransactionHistory = () => {
     return (
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <h1 className="text-2xl font-bold text-gray-900">Historique des Transactions</h1>
+                <h1 className="text-2xl font-bold text-gray-800">Historique des Transactions</h1>
 
                 <div className="flex gap-2">
                     <div className="relative">
@@ -74,8 +74,8 @@ const TransactionHistory = () => {
                             key={tab}
                             onClick={() => setFilter(tab)}
                             className={`pb-3 text-sm font-medium transition-colors border-b-2 ${filter === tab
-                                    ? 'border-primary text-primary'
-                                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                                ? 'border-primary text-primary'
+                                : 'border-transparent text-gray-500 hover:text-gray-700'
                                 }`}
                         >
                             {tab === 'ALL' ? 'Tout voir' : tab}
@@ -96,21 +96,20 @@ const TransactionHistory = () => {
                                 <div key={tx.uid} className="p-6 hover:bg-gray-50 transition-colors">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-4">
-                                            <div className={`p-3 rounded-full ${tx.type === 'DEBIT' ? 'bg-blue-50 text-primary' : 'bg-green-50 text-green-600'}`}>
-                                                {tx.type === 'DEBIT' ? <FiArrowUpRight className="w-6 h-6" /> : <FiArrowDownLeft className="w-6 h-6" />}
+                                            <div className={`p-3 rounded-full ${getTransactionColor()}`}>
+                                                <FiRepeat className="w-6 h-6" />
                                             </div>
                                             <div>
-                                                <p className="font-bold text-gray-900">{tx.recipient}</p>
+                                                <p className="font-bold text-gray-900">Ref: {tx.reference}</p>
                                                 <p className="text-sm text-gray-500">
                                                     {new Date(tx.date).toLocaleDateString()} à {new Date(tx.date).toLocaleTimeString()}
                                                 </p>
-                                                <p className="text-xs text-gray-400 mt-1">Ref: {tx.reference}</p>
                                             </div>
                                         </div>
 
                                         <div className="text-right">
-                                            <p className={`text-lg font-bold ${tx.type === 'DEBIT' ? 'text-gray-900' : 'text-green-600'}`}>
-                                                {tx.type === 'DEBIT' ? '-' : '+'}{tx.amount} FCFA
+                                            <p className="text-lg font-bold text-gray-900">
+                                                {tx.amount} FCFA
                                             </p>
                                             <div className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium mt-1 ${getStatusColor(tx.status)}`}>
                                                 {getStatusIcon(tx.status)}

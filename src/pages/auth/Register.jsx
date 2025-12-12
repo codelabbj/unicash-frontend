@@ -79,6 +79,50 @@ const Register = () => {
                         />
                     </div>
 
+                    {/* First Name */}
+                    <div className="relative">
+                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                            <FiUser className="w-5 h-5" />
+                        </div>
+                        <input
+                            type="text"
+                            name="first_name"
+                            placeholder="Prénom"
+                            value={formData.first_name}
+                            onChange={handleChange}
+                            className="w-full pl-12 pr-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-primary transition-colors"
+                        />
+                    </div>
+
+                    {/* Last Name */}
+                    <div className="relative">
+                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                            <FiUser className="w-5 h-5" />
+                        </div>
+                        <input
+                            type="text"
+                            name="last_name"
+                            placeholder="Nom"
+                            value={formData.last_name}
+                            onChange={handleChange}
+                            className="w-full pl-12 pr-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-primary transition-colors"
+                        />
+                    </div>
+
+                    {/* Phone */}
+                    <div className="relative">
+                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                            <FiPhone className="w-5 h-5" />
+                        </div>
+                        <input
+                            type="tel"
+                            name="phone_number"
+                            placeholder="Téléphone"
+                            value={formData.phone_number}
+                            onChange={handleChange}
+                            className="w-full pl-12 pr-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-primary transition-colors"
+                        />
+                    </div>
                     {/* Password */}
                     <div className="relative">
                         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
@@ -96,50 +140,6 @@ const Register = () => {
                         />
                     </div>
 
-                    {/* First Name */}
-                    <div className="relative">
-                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
-                            <FiUser className="w-5 h-5" />
-                        </div>
-                        <input
-                            type="text"
-                            name="first_name"
-                            placeholder="Prénom (optionnel)"
-                            value={formData.first_name}
-                            onChange={handleChange}
-                            className="w-full pl-12 pr-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-primary transition-colors"
-                        />
-                    </div>
-
-                    {/* Last Name */}
-                    <div className="relative">
-                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
-                            <FiUser className="w-5 h-5" />
-                        </div>
-                        <input
-                            type="text"
-                            name="last_name"
-                            placeholder="Nom (optionnel)"
-                            value={formData.last_name}
-                            onChange={handleChange}
-                            className="w-full pl-12 pr-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-primary transition-colors"
-                        />
-                    </div>
-
-                    {/* Phone */}
-                    <div className="relative">
-                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
-                            <FiPhone className="w-5 h-5" />
-                        </div>
-                        <input
-                            type="tel"
-                            name="phone_number"
-                            placeholder="Téléphone (optionnel)"
-                            value={formData.phone_number}
-                            onChange={handleChange}
-                            className="w-full pl-12 pr-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:border-primary transition-colors"
-                        />
-                    </div>
 
                     {error && (
                         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">

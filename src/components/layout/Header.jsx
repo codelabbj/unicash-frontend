@@ -1,8 +1,17 @@
+import { useState } from 'react';
 import { FiMenu, FiBell } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const Header = ({ onMenuClick }) => {
     const { user } = useAuth();
+    const navigate = useNavigate();
+    const [hasUnread, setHasUnread] = useState(true);
+
+    const handleNotificationClick = () => {
+        setHasUnread(false);
+        navigate('/notifications');
+    };
 
     return (
         <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-30">
@@ -24,9 +33,14 @@ const Header = ({ onMenuClick }) => {
                 {/* Right Actions */}
                 <div className="flex items-center gap-2 md:gap-4">
                     {/* Notifications */}
-                    <button className="relative p-2 rounded-xl text-gray-500 hover:bg-gray-100 hover:text-primary transition-colors">
+                    <button
+                        onClick={handleNotificationClick}
+                        className="relative p-2 rounded-xl text-gray-500 hover:bg-gray-100 hover:text-primary transition-colors"
+                    >
                         <FiBell className="w-6 h-6" />
-                        <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+                        {hasUnread && (
+                            <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+                        )}
                     </button>
                 </div>
             </div>

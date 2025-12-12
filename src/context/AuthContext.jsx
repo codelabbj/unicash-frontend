@@ -39,8 +39,28 @@ const authReducer = (state, action) => {
 
 export const AuthProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authReducer, initialState);
+    const devMode = import.meta.env.VITE_DEV_MODE === 'true';
+
+    // Mock user for development mode
+    const mockUser = {
+        user_id: 1,
+        email: 'dev@unicash.com',
+        first_name: 'Dev',
+        last_name: 'User',
+        exp: Math.floor(Date.now() / 1000) + 86400, // expires in 24 hours
+    };
 
     useEffect(() => {
+        // In dev mode, auto-login with mock user
+        if (devMode) {
+            dispatch({
+                type: 'LOGIN_SUCCESS',
+                payload: { user: mockUser },
+            });
+            dispatch({ type: 'SET_LOADING', payload: false });
+            return;
+        }
+
         // Check if user is already logged in
         const token = localStorage.getItem('access_token');
         if (token) {
@@ -62,7 +82,7 @@ export const AuthProvider = ({ children }) => {
             }
         }
         dispatch({ type: 'SET_LOADING', payload: false });
-    }, []);
+    }, [devMode]);
 
     const login = async (email, password) => {
         try {
