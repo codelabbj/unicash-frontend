@@ -57,11 +57,7 @@ const Login = () => {
                 </div>
 
                 {/* Money icon decoration */}
-                <div className="flex justify-center mb-6">
-                    <div className="text-gray-300">
-                        <FiDollarSign className="w-8 h-8" />
-                    </div>
-                </div>
+
 
                 {/* Form */}
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -81,11 +77,7 @@ const Login = () => {
                     </div>
 
                     {/* Dollar sign decoration between inputs */}
-                    <div className="flex justify-center">
-                        <div className="text-gray-300">
-                            <FiDollarSign className="w-6 h-6" />
-                        </div>
-                    </div>
+
 
                     {/* Password Input */}
                     <div className="relative">
