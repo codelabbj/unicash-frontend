@@ -135,7 +135,9 @@ const VerifyEmail = () => {
                             : "Je n'ai pas reçu le code (Renvoyer)"}
                     </button>
                     <div className="mt-4">
-                        <Link to="/login" className="text-sm text-gray-500 hover:text-gray-700">
+                        <Link to="/login"
+                            className="text-primary font-medium relative hover:no-underline after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-primary after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left"
+                        >
                             Retour à la connexion
                         </Link>
                     </div>

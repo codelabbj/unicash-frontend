@@ -59,7 +59,7 @@ const Register = () => {
                         alt="UniCash"
                         className="w-48 h-auto mx-auto mb-2"
                     />
-                    <p className="text-gray-600 mt-2">Créer un compte</p>
+                    <p className="text-gray-600 text-xl mt-2">Créer un compte</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -157,8 +157,11 @@ const Register = () => {
                 </form>
 
                 <div className="text-center mt-6 text-sm">
-                    <Link to="/login" className="text-gray-600 hover:text-primary underline">
-                        Déjà un compte ? Connectez-vous
+                    Déjà un compte ? {' '}
+                    <Link to="/login"
+                        className="text-primary font-medium relative hover:no-underline after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-primary after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left"
+                    >
+                        Connectez-vous
                     </Link>
                 </div>
             </div>

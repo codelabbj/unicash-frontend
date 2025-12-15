@@ -54,6 +54,7 @@ const Login = () => {
                         alt="UniCash"
                         className="w-48 h-auto mx-auto"
                     />
+                    <p className="text-gray-600 text-xl mt-2">Connexion</p>
                 </div>
 
                 {/* Money icon decoration */}
@@ -112,19 +113,24 @@ const Login = () => {
                 </form>
 
                 {/* Bottom Links */}
-                <div className="flex justify-between items-center mt-6 text-sm">
-                    <Link
-                        to="/register"
-                        className="text-gray-600 hover:text-primary underline transition-colors"
-                    >
-                        Pas de compte ?<br />Inscrivez-vous
-                    </Link>
-                    <Link
-                        to="/password-reset"
-                        className="text-gray-600 hover:text-primary underline transition-colors"
-                    >
-                        Mot de passe<br />oublié
-                    </Link>
+                <div className="mt-6 text-sm space-y-4">
+                    <div className="text-right">
+                        <Link
+                            to="/password-reset"
+                            className="text-primary font-medium relative hover:no-underline after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-primary after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left"
+                        >
+                            Mot de passe oublié
+                        </Link>
+                    </div>
+                    <div className="text-center">
+                        Pas de compte ?
+                        <Link
+                            to="/register"
+                            className="text-primary font-medium ml-1 relative hover:no-underline after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-primary after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left"
+                        >
+                            Inscrivez-vous
+                        </Link>
+                    </div>
                 </div>
             </div>
 
