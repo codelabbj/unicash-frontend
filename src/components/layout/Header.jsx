@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FiMenu, FiBell } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import logo from '../../assets/logo.png';
 
 const Header = ({ onMenuClick }) => {
     const { user } = useAuth();
@@ -17,13 +18,18 @@ const Header = ({ onMenuClick }) => {
         <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-30">
             <div className="flex items-center justify-between px-4 py-3 md:px-6">
                 <div className="flex items-center gap-4">
-                    {/* Mobile Menu Button */}
+                    {/* Tablet Menu Button */}
                     <button
                         onClick={onMenuClick}
-                        className="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                        className="hidden md:block lg:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
                     >
                         <FiMenu className="w-6 h-6" />
                     </button>
+
+                    {/* Mobile Logo */}
+                    <div className="md:hidden">
+                        <img src={logo} alt="UniCash" className="h-8 w-auto" />
+                    </div>
 
                     <h2 className="text-lg font-semibold text-gray-800 hidden md:block">
                         Bonjour, {user?.first_name || 'Utilisateur'}

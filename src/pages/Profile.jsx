@@ -73,7 +73,7 @@ const Profile = () => {
                                     <h4 className="font-medium text-gray-900 flex items-center gap-2">
                                         <FiLock className="text-gray-400" /> Mot de passe
                                     </h4>
-                                    <button className="text-sm text-primary font-medium hover:underline">Modifier</button>
+                                    <button className="text-primary font-medium relative hover:no-underline after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-primary after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left">Modifier</button>
                                 </div>
                                 <p className="text-sm text-gray-500">Dernière modification il y a 3 mois</p>
                             </div>
