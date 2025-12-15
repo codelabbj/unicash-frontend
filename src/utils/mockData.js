@@ -11,3 +11,27 @@ export const mockTransactions = [
 export const getRecentTransactions = (limit = 5) => {
     return mockTransactions.slice(0, limit);
 };
+
+export const mockBanners = [
+    {
+        id: 1,
+        title: "Envoyez plus, payez moins",
+        description: "Frais réduits sur tous vos transferts vers Moov, Mtn ou Celtiis.",
+        image: "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?q=80&w=1000&auto=format&fit=crop",
+        link: "/transaction/new"
+    },
+    {
+        id: 2,
+        title: "Faites vos transactions sans bouger",
+        description: "Faites vos transactions sans bouger de votre lit.",
+        image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=1000&auto=format&fit=crop",
+        link: "/profile"
+    },
+    {
+        id: 3,
+        title: "Faites vos transactions en toute sécurité",
+        description: "Faites vos transactions en toute sécurité avec UniCash.",
+        image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1000&auto=format&fit=crop",
+        link: "/dashboard"
+    }
+];

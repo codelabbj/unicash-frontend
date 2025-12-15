@@ -36,10 +36,10 @@ const MainLayout = () => {
             </div>
 
             {/* Main Content Wrapper */}
-            <div className="flex-1 flex flex-col min-h-screen transition-all duration-300 lg:ml-72">
+            <div className="flex-1 flex flex-col h-full overflow-hidden transition-all duration-300 lg:ml-72">
                 <Header onMenuClick={() => setSidebarOpen(true)} />
 
-                <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 pb-20 md:pb-6">
+                <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 pb-24 md:pb-6">
                     <Outlet />
                 </main>
             </div>

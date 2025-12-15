@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import { FiSend, FiList, FiTrendingUp, FiCheckCircle } from 'react-icons/fi';
 import StatisticsCard from '../components/dashboard/StatisticsCard';
 import RecentTransactions from '../components/dashboard/RecentTransactions';
-import { getRecentTransactions } from '../utils/mockData';
+import AdCarousel from '../components/common/AdCarousel';
+import { getRecentTransactions, mockBanners } from '../utils/mockData';
 
 const Dashboard = () => {
     // Mock data - to be replaced with API call
@@ -25,6 +26,11 @@ const Dashboard = () => {
                     <FiSend size={18} />
                     <span className="hidden sm:inline">Nouvelle Transaction</span>
                 </Link>
+            </div>
+
+            {/* Mobile Ad Carousel */}
+            <div className="md:hidden">
+                <AdCarousel banners={mockBanners} />
             </div>
 
             {/* Statistics */}
