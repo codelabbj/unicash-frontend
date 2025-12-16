@@ -144,10 +144,7 @@ const TransactionDetails = () => {
                                 {new Date(transaction.date).toLocaleTimeString()}
                             </p>
                         </div>
-                        <div>
-                            <p className="text-sm text-gray-500 mb-1">Type</p>
-                            <p className="font-medium text-gray-900">Transfert d'argent</p>
-                        </div>
+
                         <div>
                             <p className="text-sm text-gray-500 mb-1">Frais</p>
                             <p className="font-medium text-gray-900">0 FCFA</p>
@@ -155,12 +152,10 @@ const TransactionDetails = () => {
                     </div>
 
                     {/* Actions */}
-                    <div className="pt-6 mt-6 border-t border-gray-100 flex gap-4">
-                        <button className="flex-1 py-3 px-4 bg-primary text-white rounded-xl font-medium hover:bg-primary-hover transition-colors flex items-center justify-center gap-2">
-                            <FiShare2 /> Partager le reçu
-                        </button>
-                        <button className="flex-1 py-3 px-4 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
-                            <FiDownload /> Télécharger
+                    <div className="pt-6 mt-6 border-t border-gray-100">
+                        <button className="w-full py-4 px-6 bg-[#1e40af] text-white rounded-2xl font-bold text-lg hover:bg-blue-900 transition-colors flex items-center justify-center gap-3 shadow-lg shadow-blue-900/20 active:scale-[0.98]">
+                            <FiDownload className="w-6 h-6" />
+                            <span>Télécharger le reçu</span>
                         </button>
                     </div>
                 </div>

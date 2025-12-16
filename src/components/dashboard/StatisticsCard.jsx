@@ -1,4 +1,15 @@
-const StatisticsCard = ({ title, value, icon: Icon, isDark = false }) => {
+const StatisticsCard = ({ title, value, icon: Icon, isDark = false, color }) => {
+    const colorVariants = {
+        blue: 'bg-blue-50 text-blue-600',
+        purple: 'bg-purple-50 text-purple-600',
+        green: 'bg-green-50 text-green-600',
+        orange: 'bg-orange-50 text-orange-600',
+    };
+
+    const iconStyle = color
+        ? colorVariants[color]
+        : (isDark ? 'bg-blue-50 text-[#1e40af]' : 'bg-gray-50 text-primary');
+
     return (
         <div className={`
              rounded-2xl p-4 flex flex-col justify-between gap-4 transition-transform hover:scale-[1.02]
@@ -8,7 +19,7 @@ const StatisticsCard = ({ title, value, icon: Icon, isDark = false }) => {
         `}>
             <div className={`
                 w-10 h-10 rounded-xl flex items-center justify-center
-                ${isDark ? 'bg-blue-50 text-[#1e40af]' : 'bg-gray-50 text-primary'}
+                ${iconStyle}
             `}>
                 <Icon className="w-5 h-5" />
             </div>

@@ -8,7 +8,7 @@ import { getRecentTransactions, mockBanners } from '../utils/mockData';
 const Dashboard = () => {
     // Mock data - to be replaced with API call
     const stats = {
-        totalSent: '150 FCFA',
+        totalSent: '150  FCFA',
         transactionsCount: 12,
         successRate: '98%',
         pendingCount: 2
@@ -42,24 +42,28 @@ const Dashboard = () => {
                         value={stats.totalSent}
                         icon={FiTrendingUp}
                         isDark={true}
+                        color="blue"
                     />
                     <StatisticsCard
                         title="Total Transferts"
                         value={stats.transactionsCount}
                         icon={FiList}
                         isDark={true}
+                        color="purple"
                     />
                     <StatisticsCard
                         title="Taux de Succès"
                         value={stats.successRate}
                         icon={FiCheckCircle}
                         isDark={true}
+                        color="green"
                     />
                     <StatisticsCard
                         title="En Attente"
                         value={stats.pendingCount}
                         icon={FiClock}
                         isDark={true}
+                        color="orange"
                     />
                 </div>
             </div>
