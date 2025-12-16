@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FiSearch, FiFilter, FiRepeat, FiClock, FiCheckCircle, FiXCircle } from 'react-icons/fi';
 import { transactionAPI } from '../../api/transaction.api';
 import { mockTransactions } from '../../utils/mockData';
 
 const TransactionHistory = () => {
+    const navigate = useNavigate();
     const [transactions, setTransactions] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [filter, setFilter] = useState('ALL'); // ALL, SUCCESS, PENDING, FAILED
@@ -93,7 +95,11 @@ const TransactionHistory = () => {
                         {transactions
                             .filter(t => filter === 'ALL' || t.status === filter)
                             .map((tx) => (
-                                <div key={tx.uid} className="p-6 hover:bg-gray-50 transition-colors">
+                                <div
+                                    key={tx.uid}
+                                    onClick={() => navigate(`/transaction/${tx.uid}`)}
+                                    className="p-6 hover:bg-gray-50 transition-colors cursor-pointer"
+                                >
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-4">
                                             <div className={`p-3 rounded-full ${getTransactionColor()}`}>

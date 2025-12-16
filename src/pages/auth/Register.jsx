@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { FiUser, FiLock, FiMail, FiPhone, FiDollarSign } from 'react-icons/fi';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/Unicash.png';
 
 const Register = () => {
     const [formData, setFormData] = useState({

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { authAPI } from '../../api/auth.api';
 import { FiDollarSign, FiMail, FiCheckCircle } from 'react-icons/fi';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/Unicash.png';
 
 const PasswordReset = () => {
     const [email, setEmail] = useState('');

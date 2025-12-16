@@ -12,6 +12,7 @@ import PasswordReset from './pages/auth/PasswordReset';
 import Dashboard from './pages/Dashboard';
 import NewTransaction from './pages/transaction/NewTransaction';
 import TransactionHistory from './pages/transaction/TransactionHistory';
+import TransactionDetails from './pages/transaction/TransactionDetails';
 import Profile from './pages/Profile';
 import Notifications from './pages/Notifications';
 
@@ -59,6 +60,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/transaction/new" element={<NewTransaction />} />
             <Route path="/transactions" element={<TransactionHistory />} />
+            <Route path="/transaction/:id" element={<TransactionDetails />} />
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/profile" element={<Profile />} />
           </Route>

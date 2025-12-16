@@ -4,7 +4,7 @@ import {
 } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
 
-import logo from '../../assets/logo.png';
+import logo from '../../assets/Unicash-logo.png';
 
 const Sidebar = ({ onClose }) => {
     const { user, logout } = useAuth();

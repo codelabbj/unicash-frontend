@@ -3,7 +3,7 @@ import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { authAPI } from '../../api/auth.api';
 import { FiCheckCircle, FiDollarSign } from 'react-icons/fi';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/Unicash.png';
 
 const VerifyEmail = () => {
     const { state } = useLocation();

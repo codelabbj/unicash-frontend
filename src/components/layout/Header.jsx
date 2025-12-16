@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FiMenu, FiBell } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/Unicash-logo.png';
 
 const Header = ({ onMenuClick }) => {
     const { user } = useAuth();
@@ -21,7 +21,7 @@ const Header = ({ onMenuClick }) => {
                     {/* Tablet Menu Button */}
                     <button
                         onClick={onMenuClick}
-                        className="hidden md:block lg:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                        className="hidden md:block xl:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
                     >
                         <FiMenu className="w-6 h-6" />
                     </button>

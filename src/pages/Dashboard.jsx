@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { FiSend, FiList, FiTrendingUp, FiCheckCircle } from 'react-icons/fi';
+import { FiSend, FiList, FiTrendingUp, FiCheckCircle, FiClock } from 'react-icons/fi';
 import StatisticsCard from '../components/dashboard/StatisticsCard';
 import RecentTransactions from '../components/dashboard/RecentTransactions';
 import AdCarousel from '../components/common/AdCarousel';
@@ -8,9 +8,10 @@ import { getRecentTransactions, mockBanners } from '../utils/mockData';
 const Dashboard = () => {
     // Mock data - to be replaced with API call
     const stats = {
-        totalSent: '150 000 FCFA',
+        totalSent: '150 FCFA',
         transactionsCount: 12,
-        successRate: '98%'
+        successRate: '98%',
+        pendingCount: 2
     };
 
     const recentTransactions = getRecentTransactions(5);
@@ -34,25 +35,33 @@ const Dashboard = () => {
             </div>
 
             {/* Statistics */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <StatisticsCard
-                    title="Total Envoyé"
-                    value={stats.totalSent}
-                    icon={FiTrendingUp}
-                    colorClass="bg-blue-50 text-blue-600"
-                />
-                <StatisticsCard
-                    title="Transactions"
-                    value={stats.transactionsCount}
-                    icon={FiList}
-                    colorClass="bg-purple-50 text-purple-600"
-                />
-                <StatisticsCard
-                    title="Taux de Succès"
-                    value={stats.successRate}
-                    icon={FiCheckCircle}
-                    colorClass="bg-green-50 text-green-600"
-                />
+            <div className="bg-[#1e40af] rounded-3xl p-6 shadow-lg">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <StatisticsCard
+                        title="Total Envoyé"
+                        value={stats.totalSent}
+                        icon={FiTrendingUp}
+                        isDark={true}
+                    />
+                    <StatisticsCard
+                        title="Total Transferts"
+                        value={stats.transactionsCount}
+                        icon={FiList}
+                        isDark={true}
+                    />
+                    <StatisticsCard
+                        title="Taux de Succès"
+                        value={stats.successRate}
+                        icon={FiCheckCircle}
+                        isDark={true}
+                    />
+                    <StatisticsCard
+                        title="En Attente"
+                        value={stats.pendingCount}
+                        icon={FiClock}
+                        isDark={true}
+                    />
+                </div>
             </div>
 
             {/* Recent Activity Section */}

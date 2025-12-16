@@ -11,7 +11,7 @@ const MainLayout = () => {
         <div className="flex h-screen bg-gray-50 font-sans">
             {/* Sidebar Desktop */}
             <aside className={`
-        hidden lg:block w-72 bg-white shadow-xl z-40
+        hidden xl:block w-72 bg-white shadow-xl z-40
         transition-all duration-300 fixed inset-y-0 left-0
       `}>
                 <Sidebar />
@@ -21,10 +21,10 @@ const MainLayout = () => {
             {sidebarOpen && (
                 <>
                     <div
-                        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity lg:hidden"
+                        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity xl:hidden"
                         onClick={() => setSidebarOpen(false)}
                     />
-                    <aside className="fixed inset-y-0 left-0 w-72 bg-white shadow-2xl z-50 transform transition-transform duration-300 lg:hidden">
+                    <aside className="fixed inset-y-0 left-0 w-72 bg-white shadow-2xl z-50 transform transition-transform duration-300 xl:hidden">
                         <Sidebar onClose={() => setSidebarOpen(false)} />
                     </aside>
                 </>
@@ -36,7 +36,7 @@ const MainLayout = () => {
             </div>
 
             {/* Main Content Wrapper */}
-            <div className="flex-1 flex flex-col h-full overflow-hidden transition-all duration-300 lg:ml-72">
+            <div className="flex-1 flex flex-col h-full overflow-hidden transition-all duration-300 xl:ml-72">
                 <Header onMenuClick={() => setSidebarOpen(true)} />
 
                 <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 pb-24 md:pb-6">

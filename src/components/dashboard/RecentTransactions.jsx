@@ -1,7 +1,9 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiRepeat } from 'react-icons/fi';
 
 const RecentTransactions = ({ transactions = [] }) => {
+    const navigate = useNavigate();
+
     if (!transactions.length) {
         return (
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 text-center py-12">
@@ -22,7 +24,11 @@ const RecentTransactions = ({ transactions = [] }) => {
             </div>
             <div className="divide-y divide-gray-100">
                 {transactions.map((tx) => (
-                    <div key={tx.uid} className="p-4 hover:bg-gray-50 transition-colors flex items-center justify-between">
+                    <div
+                        key={tx.uid}
+                        onClick={() => navigate(`/transaction/${tx.uid}`)}
+                        className="p-4 hover:bg-gray-50 transition-colors flex items-center justify-between cursor-pointer"
+                    >
                         <div className="flex items-center gap-4">
                             <div className={`p-2 rounded-full ${getTransactionColor()}`}>
                                 <FiRepeat size={18} />
