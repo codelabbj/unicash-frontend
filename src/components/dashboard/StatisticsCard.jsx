@@ -8,7 +8,7 @@ const StatisticsCard = ({ title, value, icon: Icon, isDark = false, color }) => 
 
     const iconStyle = color
         ? colorVariants[color]
-        : (isDark ? 'bg-blue-50 text-[#1e40af]' : 'bg-gray-50 text-primary');
+        : (isDark ? 'bg-white-50 text-[#ffffff]' : 'bg-gray-50 text-primary');
 
     return (
         <div className={`

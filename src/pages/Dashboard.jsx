@@ -35,37 +35,31 @@ const Dashboard = () => {
             </div>
 
             {/* Statistics */}
-            <div className="bg-[#1e40af] rounded-3xl p-6 shadow-lg">
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                    <StatisticsCard
-                        title="Total Envoyé"
-                        value={stats.totalSent}
-                        icon={FiTrendingUp}
-                        isDark={true}
-                        color="blue"
-                    />
-                    <StatisticsCard
-                        title="Total Transferts"
-                        value={stats.transactionsCount}
-                        icon={FiList}
-                        isDark={true}
-                        color="purple"
-                    />
-                    <StatisticsCard
-                        title="Taux de Succès"
-                        value={stats.successRate}
-                        icon={FiCheckCircle}
-                        isDark={true}
-                        color="green"
-                    />
-                    <StatisticsCard
-                        title="En Attente"
-                        value={stats.pendingCount}
-                        icon={FiClock}
-                        isDark={true}
-                        color="orange"
-                    />
-                </div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <StatisticsCard
+                    title="Total Envoyé"
+                    value={stats.totalSent}
+                    icon={FiTrendingUp}
+                    color="blue"
+                />
+                <StatisticsCard
+                    title="Total Transferts"
+                    value={stats.transactionsCount}
+                    icon={FiList}
+                    color="purple"
+                />
+                <StatisticsCard
+                    title="Taux de Succès"
+                    value={stats.successRate}
+                    icon={FiCheckCircle}
+                    color="green"
+                />
+                <StatisticsCard
+                    title="En Attente"
+                    value={stats.pendingCount}
+                    icon={FiClock}
+                    color="orange"
+                />
             </div>
 
             {/* Recent Activity Section */}
