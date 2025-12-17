@@ -68,19 +68,8 @@ const Dashboard = () => {
                     <RecentTransactions transactions={recentTransactions} />
                 </div>
 
-                {/* Quick Actions or Promo Banner */}
-                <div className="bg-gradient-to-br from-primary to-primary-hover rounded-2xl p-6 text-white shadow-lg">
-                    <h3 className="font-bold text-xl mb-2">Envoyez de l'argent rapidement</h3>
-                    <p className="text-blue-100 mb-6 text-sm">
-                        Transférez de l'argent vers tous les réseaux mobiles instantanément et à moindre coût.
-                    </p>
-                    <Link
-                        to="/transaction/new"
-                        className="block w-full bg-white text-primary text-center font-bold py-3 rounded-xl hover:bg-gray-50 transition-colors"
-                    >
-                        Commencer
-                    </Link>
-                </div>
+
+
             </div>
         </div>
     );
