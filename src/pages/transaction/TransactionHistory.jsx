@@ -48,6 +48,16 @@ const TransactionHistory = () => {
         }
     };
 
+    const getStatusLabel = (status) => {
+        switch (status) {
+            case 'SUCCESS': return 'Succès';
+            case 'PENDING': return 'En attente';
+            case 'FAILED': return 'Échec';
+            case 'ALL': return 'Tout voir';
+            default: return status;
+        }
+    };
+
     return (
         <div className="space-y-6">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -80,7 +90,7 @@ const TransactionHistory = () => {
                                 : 'border-transparent text-gray-500 hover:text-gray-700'
                                 }`}
                         >
-                            {tab === 'ALL' ? 'Tout voir' : tab}
+                            {getStatusLabel(tab)}
                         </button>
                     ))}
                 </nav>
@@ -119,7 +129,7 @@ const TransactionHistory = () => {
                                             </p>
                                             <div className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium mt-1 ${getStatusColor(tx.status)}`}>
                                                 {getStatusIcon(tx.status)}
-                                                {tx.status}
+                                                {getStatusLabel(tx.status)}
                                             </div>
                                         </div>
                                     </div>

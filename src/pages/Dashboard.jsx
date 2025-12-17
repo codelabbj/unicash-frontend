@@ -8,7 +8,7 @@ import { getRecentTransactions, mockBanners } from '../utils/mockData';
 const Dashboard = () => {
     // Mock data - to be replaced with API call
     const stats = {
-        totalSent: '150  FCFA',
+        totalSent: '150 000 FCFA',
         transactionsCount: 12,
         successRate: '98%',
         pendingCount: 2

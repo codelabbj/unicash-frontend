@@ -45,7 +45,8 @@ const RecentTransactions = ({ transactions = [] }) => {
                             <span className={`text-xs px-2 py-1 rounded-full ${tx.status === 'SUCCESS' ? 'bg-green-100 text-green-700' :
                                 tx.status === 'PENDING' ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700'
                                 }`}>
-                                {tx.status}
+                                {tx.status === 'SUCCESS' ? 'Succès' :
+                                    tx.status === 'PENDING' ? 'En attente' : 'Échec'}
                             </span>
                         </div>
                     </div>
