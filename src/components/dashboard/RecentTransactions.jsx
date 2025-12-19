@@ -17,7 +17,7 @@ const RecentTransactions = ({ transactions = [] }) => {
     };
 
     return (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden h-full">
             <div className="p-6 border-b border-gray-100 flex justify-between items-center">
                 <h3 className="font-bold text-gray-800">Transactions Récentes</h3>
                 <Link to="/transactions" className="text-sm text-primary font-medium hover:underline">Voir tout</Link>

@@ -17,7 +17,7 @@ const AdCarousel = ({ banners }) => {
     if (!banners || banners.length === 0) return null;
 
     return (
-        <div className="relative w-full max-w-full overflow-hidden rounded-2xl shadow-md bg-gray-100 mb-6">
+        <div className="relative w-full max-w-full overflow-hidden rounded-2xl shadow-md bg-gray-100">
             <div
                 className="flex transition-transform duration-500 ease-out"
                 style={{ transform: `translateX(-${currentIndex * 100}%)` }}

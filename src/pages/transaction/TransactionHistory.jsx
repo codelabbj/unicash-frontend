@@ -9,6 +9,7 @@ const TransactionHistory = () => {
     const [transactions, setTransactions] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [filter, setFilter] = useState('ALL'); // ALL, SUCCESS, PENDING, FAILED
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         const fetchTransactions = async () => {
@@ -69,6 +70,8 @@ const TransactionHistory = () => {
                         <input
                             type="text"
                             placeholder="Rechercher..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
                             className="pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-primary w-full md:w-64"
                         />
                     </div>
@@ -103,7 +106,12 @@ const TransactionHistory = () => {
                 ) : (
                     <div className="divide-y divide-gray-100">
                         {transactions
-                            .filter(t => filter === 'ALL' || t.status === filter)
+                            .filter(t => {
+                                const matchesFilter = filter === 'ALL' || t.status === filter;
+                                const matchesSearch = (t.reference?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
+                                    (t.amount?.toString() || '').includes(searchTerm);
+                                return matchesFilter && matchesSearch;
+                            })
                             .map((tx) => (
                                 <div
                                     key={tx.uid}

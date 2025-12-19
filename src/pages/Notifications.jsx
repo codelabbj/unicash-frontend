@@ -6,11 +6,11 @@ const Notifications = () => {
     const [notifications, setNotifications] = useState([
         {
             id: 1,
-            title: "Reçu de transfert",
-            message: "Vous avez reçu 15000 FCFA de John Doe.",
+            title: "Transaction réussie",
+            message: "Votre transfert de 15000 FCFA vers 91919191 a été effectué avec succès.",
             time: "Il y a 2 min",
             read: false,
-            type: "money_in"
+            type: "money_out"
         },
         {
             id: 2,

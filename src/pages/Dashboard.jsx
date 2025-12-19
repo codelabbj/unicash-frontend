@@ -3,6 +3,7 @@ import { FiSend, FiList, FiTrendingUp, FiCheckCircle, FiClock } from 'react-icon
 import StatisticsCard from '../components/dashboard/StatisticsCard';
 import RecentTransactions from '../components/dashboard/RecentTransactions';
 import AdCarousel from '../components/common/AdCarousel';
+import SupportCard from '../components/dashboard/SupportCard';
 import { getRecentTransactions, mockBanners } from '../utils/mockData';
 
 const Dashboard = () => {
@@ -63,13 +64,15 @@ const Dashboard = () => {
             </div>
 
             {/* Recent Activity Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
                 <div className="lg:col-span-2">
                     <RecentTransactions transactions={recentTransactions} />
                 </div>
 
-
-
+                <div className="hidden lg:flex flex-col gap-6 h-full">
+                    <AdCarousel banners={mockBanners} />
+                    <SupportCard />
+                </div>
             </div>
         </div>
     );
