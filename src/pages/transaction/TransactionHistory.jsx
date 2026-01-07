@@ -116,26 +116,26 @@ const TransactionHistory = () => {
                                 <div
                                     key={tx.uid}
                                     onClick={() => navigate(`/transaction/${tx.uid}`)}
-                                    className="p-6 hover:bg-gray-50 transition-colors cursor-pointer"
+                                    className="p-4 md:p-6 hover:bg-gray-50 transition-colors cursor-pointer"
                                 >
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center gap-4">
-                                            <div className={`p-3 rounded-full ${getTransactionColor()}`}>
-                                                <FiRepeat className="w-6 h-6" />
+                                    <div className="flex items-center justify-between gap-3">
+                                        <div className="flex items-center gap-2 md:gap-4 min-w-0">
+                                            <div className={`p-2.5 md:p-3 rounded-full flex-shrink-0 ${getTransactionColor()}`}>
+                                                <FiRepeat className="w-5 h-5 md:w-6 h-6" />
                                             </div>
-                                            <div>
-                                                <p className="font-bold text-gray-900">Ref: {tx.reference}</p>
-                                                <p className="text-sm text-gray-500">
+                                            <div className="min-w-0">
+                                                <p className="font-bold text-gray-900 text-sm md:text-base truncate">Ref: {tx.reference}</p>
+                                                <p className="text-[11px] md:text-sm text-gray-500 truncate">
                                                     {new Date(tx.date).toLocaleDateString()} à {new Date(tx.date).toLocaleTimeString()}
                                                 </p>
                                             </div>
                                         </div>
 
-                                        <div className="text-right">
-                                            <p className="text-lg font-bold text-gray-900">
+                                        <div className="text-right flex-shrink-0">
+                                            <p className="text-base md:text-lg font-bold text-gray-900">
                                                 {tx.amount} FCFA
                                             </p>
-                                            <div className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium mt-1 ${getStatusColor(tx.status)}`}>
+                                            <div className={`inline-flex items-center gap-1 px-2 md:px-2.5 py-0.5 rounded-full text-[10px] md:text-xs font-medium mt-1 whitespace-nowrap ${getStatusColor(tx.status)}`}>
                                                 {getStatusIcon(tx.status)}
                                                 {getStatusLabel(tx.status)}
                                             </div>

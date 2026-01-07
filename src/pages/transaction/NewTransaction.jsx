@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { FiSend, FiSmartphone, FiArrowRight, FiInfo } from 'react-icons/fi';
+import { FiSend, FiSmartphone, FiInfo } from 'react-icons/fi';
 import { networkAPI } from '../../api/network.api';
 import { transactionAPI } from '../../api/transaction.api';
 
@@ -126,10 +126,6 @@ const NewTransaction = () => {
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
                         {/* Network Selection Row */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start relative">
-                            {/* Arrow Icon Desktop */}
-                            <div className="hidden md:flex absolute left-1/2 top-10 -translate-x-1/2 justify-center items-center bg-gray-50 rounded-full p-2 border border-gray-100 z-10">
-                                <FiArrowRight className="text-gray-400" />
-                            </div>
 
                             {/* Source */}
                             <div className="space-y-4">
@@ -147,8 +143,8 @@ const NewTransaction = () => {
                                                 type="button"
                                                 onClick={() => setValue('source_network', net.code, { shouldValidate: true })}
                                                 className={`flex flex-col items-center gap-2 p-3 rounded-2xl border-2 transition-all duration-200 ${sourceNetwork === net.code
-                                                        ? 'border-primary bg-blue-50/50 shadow-sm scale-[1.02]'
-                                                        : 'border-gray-100 bg-white hover:border-gray-200'
+                                                    ? 'border-primary bg-blue-50/50 shadow-sm scale-[1.02]'
+                                                    : 'border-gray-100 bg-white hover:border-gray-200'
                                                     }`}
                                             >
                                                 <div className="w-12 h-12 rounded-full overflow-hidden border border-gray-100 shadow-sm bg-white">
@@ -224,8 +220,8 @@ const NewTransaction = () => {
                                                 type="button"
                                                 onClick={() => setValue('destination_network', net.code, { shouldValidate: true })}
                                                 className={`flex flex-col items-center gap-2 p-3 rounded-2xl border-2 transition-all duration-200 ${destNetwork === net.code
-                                                        ? 'border-purple-600 bg-purple-50 shadow-sm scale-[1.02]'
-                                                        : 'border-gray-100 bg-white hover:border-gray-200'
+                                                    ? 'border-purple-600 bg-purple-50 shadow-sm scale-[1.02]'
+                                                    : 'border-gray-100 bg-white hover:border-gray-200'
                                                     }`}
                                             >
                                                 <div className="w-12 h-12 rounded-full overflow-hidden border border-gray-100 shadow-sm bg-white">
