@@ -13,7 +13,7 @@ const Sidebar = ({ onClose }) => {
         { path: '/dashboard', icon: FiHome, label: 'Tableau de bord' },
         { path: '/transaction/new', icon: FiPlusCircle, label: 'Nouvelle transaction' },
         { path: '/transactions', icon: FiList, label: 'Historique' },
-        { path: '/profile', icon: FiUser, label: 'Mon profil' },
+        { path: '/profile', icon: FiUser, label: 'Profil' },
     ];
 
     return (

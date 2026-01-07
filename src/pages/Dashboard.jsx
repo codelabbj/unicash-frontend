@@ -20,13 +20,13 @@ const Dashboard = () => {
     return (
         <div className="space-y-6">
             <div className="flex justify-between items-center gap-4">
-                <h1 className="text-2xl font-bold text-gray-800 truncate">Vue d'ensemble</h1>
+                <h1 className="text-2xl font-bold text-gray-800 truncate">Bienvenue sur UniCash</h1>
                 <Link
                     to="/transaction/new"
-                    className="bg-primary hover:bg-primary-hover text-white px-3 py-2 md:px-4 md:py-2 rounded-lg font-medium flex items-center gap-2 transition-colors shadow-sm whitespace-nowrap text-sm md:text-base"
+                    className="hidden md:flex bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-lg font-medium items-center gap-2 transition-colors shadow-sm whitespace-nowrap"
                 >
                     <FiSend size={18} />
-                    <span className="hidden sm:inline">Nouvelle Transaction</span>
+                    <span>Nouvelle Transaction</span>
                 </Link>
             </div>
 
@@ -36,7 +36,7 @@ const Dashboard = () => {
             </div>
 
             {/* Statistics */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
                 <StatisticsCard
                     title="Total Envoyé"
                     value={stats.totalSent}

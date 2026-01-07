@@ -12,25 +12,25 @@ const StatisticsCard = ({ title, value, icon: Icon, isDark = false, color }) => 
 
     return (
         <div className={`
-             rounded-3xl p-4 flex flex-col justify-between gap-2 transition-transform hover:scale-[1.02]
+             rounded-2xl md:rounded-3xl p-3 md:p-4 flex flex-col justify-between gap-1 md:gap-2 transition-transform hover:scale-[1.02]
             ${isDark
                 ? 'bg-white text-gray-900 shadow-sm'
                 : 'bg-white shadow-sm border border-gray-100'}
         `}>
-            <div className="flex items-start justify-between mb-2">
+            <div className="flex items-start justify-between mb-1 md:mb-2 text-right">
                 <div className={`
-                w-10 h-10 rounded-2xl flex items-center justify-center
+                w-8 h-8 md:w-10 md:h-10 rounded-xl md:rounded-2xl flex items-center justify-center shrink-0
                 ${iconStyle}
             `}>
-                    <Icon className="w-5 h-5" />
+                    <Icon className="w-4 h-4 md:w-5 md:h-5" />
                 </div>
-                <h3 className="text-lg md:text-xl font-bold text-gray-900">
+                <h3 className="text-sm md:text-xl font-bold text-gray-900 truncate ml-1">
                     {value}
                 </h3>
             </div>
 
             <div>
-                <p className="text-xs font-medium text-gray-500">
+                <p className="text-[10px] md:text-xs font-semibold text-gray-500 uppercase tracking-tight md:tracking-normal">
                     {title}
                 </p>
             </div>

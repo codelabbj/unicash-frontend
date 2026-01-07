@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { FiArrowLeft, FiCopy, FiCheckCircle, FiClock, FiXCircle, FiShare2, FiDownload } from 'react-icons/fi';
+import { FiArrowLeft, FiCopy, FiCheckCircle, FiClock, FiXCircle, FiShare2, FiDownload, FiRepeat, FiMessageCircle, FiRefreshCw } from 'react-icons/fi';
 import { transactionAPI } from '../../api/transaction.api';
 import { mockTransactions } from '../../utils/mockData';
 
@@ -151,12 +151,66 @@ const TransactionDetails = () => {
                         </div>
                     </div>
 
+                    {/* Failure Reason */}
+                    {transaction.status === 'FAILED' && transaction.failure_reason && (
+                        <div className="p-4 bg-red-50 border border-red-100 rounded-xl">
+                            <p className="text-xs text-red-500 uppercase font-semibold mb-1">Raison de l'échec</p>
+                            <p className="text-red-700 font-medium">{transaction.failure_reason}</p>
+                        </div>
+                    )}
+
                     {/* Actions */}
-                    <div className="pt-6 mt-6 border-t border-gray-100">
+                    <div className="pt-6 mt-6 border-t border-gray-100 space-y-3">
                         <button className="w-full py-4 px-6 bg-[#1e40af] text-white rounded-2xl font-bold text-lg hover:bg-blue-900 transition-colors flex items-center justify-center gap-3 shadow-lg shadow-blue-900/20 active:scale-[0.98]">
                             <FiDownload className="w-6 h-6" />
                             <span>Télécharger le reçu</span>
                         </button>
+
+                        {transaction.status === 'SUCCESS' && (
+                            <button
+                                onClick={() => navigate('/new-transaction', {
+                                    state: {
+                                        amount: transaction.amount,
+                                        source_network: transaction.source_network,
+                                        source_number: transaction.source_number,
+                                        destination_network: transaction.destination_network,
+                                        destination_number: transaction.destination_number
+                                    }
+                                })}
+                                className="w-full py-4 px-6 bg-green-600 text-white rounded-2xl font-bold text-lg hover:bg-green-700 transition-colors flex items-center justify-center gap-3 shadow-lg shadow-green-900/20 active:scale-[0.98]"
+                            >
+                                <FiRepeat className="w-6 h-6" />
+                                <span>Répéter l'opération</span>
+                            </button>
+                        )}
+
+                        {transaction.status === 'PENDING' && (
+                            <button
+                                onClick={() => window.open('https://wa.me/22900000000', '_blank')}
+                                className="w-full py-4 px-6 bg-yellow-500 text-white rounded-2xl font-bold text-lg hover:bg-yellow-600 transition-colors flex items-center justify-center gap-3 shadow-lg shadow-yellow-900/20 active:scale-[0.98]"
+                            >
+                                <FiMessageCircle className="w-6 h-6" />
+                                <span>Contacter le support</span>
+                            </button>
+                        )}
+
+                        {transaction.status === 'FAILED' && (
+                            <button
+                                onClick={() => navigate('/new-transaction', {
+                                    state: {
+                                        amount: transaction.amount,
+                                        source_network: transaction.source_network,
+                                        source_number: transaction.source_number,
+                                        destination_network: transaction.destination_network,
+                                        destination_number: transaction.destination_number
+                                    }
+                                })}
+                                className="w-full py-4 px-6 bg-red-600 text-white rounded-2xl font-bold text-lg hover:bg-red-700 transition-colors flex items-center justify-center gap-3 shadow-lg shadow-red-900/20 active:scale-[0.98]"
+                            >
+                                <FiRefreshCw className="w-6 h-6" />
+                                <span>Réessayer</span>
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>

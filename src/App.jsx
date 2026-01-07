@@ -13,7 +13,6 @@ import Dashboard from './pages/Dashboard';
 import NewTransaction from './pages/transaction/NewTransaction';
 import TransactionHistory from './pages/transaction/TransactionHistory';
 import TransactionDetails from './pages/transaction/TransactionDetails';
-import Settings from './pages/Settings';
 import Profile from './pages/Profile';
 import Notifications from './pages/Notifications';
 
@@ -62,9 +61,9 @@ function App() {
             <Route path="/transaction/new" element={<NewTransaction />} />
             <Route path="/transactions" element={<TransactionHistory />} />
             <Route path="/transaction/:id" element={<TransactionDetails />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/notifications" element={<Notifications />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/settings" element={<Navigate to="/profile" replace />} />
+            <Route path="/notifications" element={<Notifications />} />
           </Route>
 
           {/* Default redirect */}

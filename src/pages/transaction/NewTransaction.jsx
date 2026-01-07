@@ -1,9 +1,20 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { FiSend, FiSmartphone, FiArrowRight, FiInfo } from 'react-icons/fi';
 import { networkAPI } from '../../api/network.api';
 import { transactionAPI } from '../../api/transaction.api';
+
+// Network Logos
+import mtnLogo from '../../assets/Mtn_Benin.jpg';
+import moovLogo from '../../assets/Moov_Benin.jpg';
+import celtiisLogo from '../../assets/Celtiis_Benin.jpg';
+
+const networkLogos = {
+    'MTN_BJ': mtnLogo,
+    'MOOV_BJ': moovLogo,
+    'CELTIIS_BJ': celtiisLogo
+};
 
 const NewTransaction = () => {
     const [networks, setNetworks] = useState([]);
@@ -11,16 +22,37 @@ const NewTransaction = () => {
     const [error, setError] = useState('');
     const [fees, setFees] = useState(0);
     const navigate = useNavigate();
+    const location = useLocation();
 
-    const { register, handleSubmit, watch, formState: { errors } } = useForm({
+    const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
+        mode: 'onChange',
         defaultValues: {
             amount: '',
             source_network: '',
             source_number: '',
+            source_number_confirm: '',
             destination_network: '',
-            destination_number: ''
+            destination_number: '',
+            destination_number_confirm: ''
         }
     });
+
+    useEffect(() => {
+        if (location.state) {
+            const { amount, source_network, source_number, destination_network, destination_number } = location.state;
+            if (amount) setValue('amount', amount);
+            if (source_network) setValue('source_network', source_network);
+            if (source_number) {
+                setValue('source_number', source_number);
+                setValue('source_number_confirm', source_number);
+            }
+            if (destination_network) setValue('destination_network', destination_network);
+            if (destination_number) {
+                setValue('destination_number', destination_number);
+                setValue('destination_number_confirm', destination_number);
+            }
+        }
+    }, [location.state, setValue]);
 
     const amount = watch('amount');
     const sourceNetwork = watch('source_network');
@@ -107,17 +139,33 @@ const NewTransaction = () => {
                                 </h3>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-600 mb-1">Réseau</label>
-                                    <select
-                                        {...register('source_network', { required: 'Requis' })}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-primary bg-white"
-                                    >
-                                        <option value="">Sélectionner...</option>
+                                    <label className="block text-sm font-medium text-gray-600 mb-2">Réseau Source</label>
+                                    <div className="grid grid-cols-3 gap-3">
                                         {networks.map(net => (
-                                            <option key={net.id} value={net.code}>{net.name}</option>
+                                            <button
+                                                key={net.id}
+                                                type="button"
+                                                onClick={() => setValue('source_network', net.code, { shouldValidate: true })}
+                                                className={`flex flex-col items-center gap-2 p-3 rounded-2xl border-2 transition-all duration-200 ${sourceNetwork === net.code
+                                                        ? 'border-primary bg-blue-50/50 shadow-sm scale-[1.02]'
+                                                        : 'border-gray-100 bg-white hover:border-gray-200'
+                                                    }`}
+                                            >
+                                                <div className="w-12 h-12 rounded-full overflow-hidden border border-gray-100 shadow-sm bg-white">
+                                                    <img
+                                                        src={networkLogos[net.code]}
+                                                        alt={net.name}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                </div>
+                                                <span className={`text-[10px] font-bold uppercase tracking-wider ${sourceNetwork === net.code ? 'text-primary' : 'text-gray-500'}`}>
+                                                    {net.name.split(' ')[0]}
+                                                </span>
+                                            </button>
                                         ))}
-                                    </select>
-                                    {errors.source_network && <span className="text-red-500 text-xs">{errors.source_network.message}</span>}
+                                    </div>
+                                    <input type="hidden" {...register('source_network', { required: 'Veuillez choisir un réseau' })} />
+                                    {errors.source_network && <span className="text-red-500 text-xs mt-1 block">{errors.source_network.message}</span>}
                                 </div>
 
                                 <div>
@@ -168,17 +216,33 @@ const NewTransaction = () => {
                                 </h3>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-600 mb-1">Réseau</label>
-                                    <select
-                                        {...register('destination_network', { required: 'Requis' })}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:border-primary bg-white"
-                                    >
-                                        <option value="">Sélectionner...</option>
+                                    <label className="block text-sm font-medium text-gray-600 mb-2">Réseau Destination</label>
+                                    <div className="grid grid-cols-3 gap-3">
                                         {networks.map(net => (
-                                            <option key={net.id} value={net.code}>{net.name}</option>
+                                            <button
+                                                key={net.id}
+                                                type="button"
+                                                onClick={() => setValue('destination_network', net.code, { shouldValidate: true })}
+                                                className={`flex flex-col items-center gap-2 p-3 rounded-2xl border-2 transition-all duration-200 ${destNetwork === net.code
+                                                        ? 'border-purple-600 bg-purple-50 shadow-sm scale-[1.02]'
+                                                        : 'border-gray-100 bg-white hover:border-gray-200'
+                                                    }`}
+                                            >
+                                                <div className="w-12 h-12 rounded-full overflow-hidden border border-gray-100 shadow-sm bg-white">
+                                                    <img
+                                                        src={networkLogos[net.code]}
+                                                        alt={net.name}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                </div>
+                                                <span className={`text-[10px] font-bold uppercase tracking-wider ${destNetwork === net.code ? 'text-purple-700' : 'text-gray-500'}`}>
+                                                    {net.name.split(' ')[0]}
+                                                </span>
+                                            </button>
                                         ))}
-                                    </select>
-                                    {errors.destination_network && <span className="text-red-500 text-xs">{errors.destination_network.message}</span>}
+                                    </div>
+                                    <input type="hidden" {...register('destination_network', { required: 'Veuillez choisir un réseau' })} />
+                                    {errors.destination_network && <span className="text-red-500 text-xs mt-1 block">{errors.destination_network.message}</span>}
                                 </div>
 
                                 <div>

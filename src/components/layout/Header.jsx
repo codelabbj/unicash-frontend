@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FiMenu, FiBell, FiSettings } from 'react-icons/fi';
+import { FiMenu, FiBell } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import logo from '../../assets/Unicash-logo.png';
@@ -47,14 +47,6 @@ const Header = ({ onMenuClick }) => {
                         {hasUnread && (
                             <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
                         )}
-                    </button>
-
-                    {/* Settings */}
-                    <button
-                        onClick={() => navigate('/settings')}
-                        className="p-2 rounded-xl text-gray-500 hover:bg-gray-100 hover:text-primary transition-colors"
-                    >
-                        <FiSettings className="w-6 h-6" />
                     </button>
                 </div>
             </div>
