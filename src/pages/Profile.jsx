@@ -18,7 +18,7 @@ const Profile = () => {
                 {
                     icon: FiHelpCircle,
                     label: 'Service Client',
-                    action: () => window.open('mailto:support@unicash.com'),
+                    action: () => navigate('/support'),
                     color: 'text-purple-600 bg-purple-50'
                 },
                 {

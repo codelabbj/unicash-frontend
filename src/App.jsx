@@ -14,6 +14,7 @@ import NewTransaction from './pages/transaction/NewTransaction';
 import TransactionHistory from './pages/transaction/TransactionHistory';
 import TransactionDetails from './pages/transaction/TransactionDetails';
 import Profile from './pages/Profile';
+import Support from './pages/Support';
 import Notifications from './pages/Notifications';
 
 function App() {
@@ -62,6 +63,7 @@ function App() {
             <Route path="/transactions" element={<TransactionHistory />} />
             <Route path="/transaction/:id" element={<TransactionDetails />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/support" element={<Support />} />
             <Route path="/settings" element={<Navigate to="/profile" replace />} />
             <Route path="/notifications" element={<Notifications />} />
           </Route>

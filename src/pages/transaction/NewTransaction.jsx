@@ -16,8 +16,14 @@ const networkLogos = {
     'CELTIIS_BJ': celtiisLogo
 };
 
+const DEFAULT_NETWORKS = [
+    { id: 1, name: 'MTN Benin', code: 'MTN_BJ' },
+    { id: 2, name: 'Moov Benin', code: 'MOOV_BJ' },
+    { id: 3, name: 'Celtiis', code: 'CELTIIS_BJ' }
+];
+
 const NewTransaction = () => {
-    const [networks, setNetworks] = useState([]);
+    const [networks, setNetworks] = useState(DEFAULT_NETWORKS);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [fees, setFees] = useState(0);
