@@ -16,14 +16,14 @@ const Support = () => {
             icon: FiMessageCircle,
             label: 'WhatsApp',
             value: '+229 0162241874',
-            action: () => window.open('https://wa.me/2290147765748'),
+            action: () => window.open('https://wa.me/2290168021401'),
             color: 'text-green-600 bg-green-50'
         },
         {
             icon: FiPhone,
             label: 'Appel',
             value: '+229 0162241874',
-            action: () => window.open('tel:+2290147765748'),
+            action: () => window.open('tel:+2290168021401'),
             color: 'text-purple-600 bg-purple-50'
         }
     ];
