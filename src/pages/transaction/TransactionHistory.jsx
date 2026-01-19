@@ -14,12 +14,20 @@ const TransactionHistory = () => {
     useEffect(() => {
         const fetchTransactions = async () => {
             try {
-                const data = await transactionAPI.getTransactions();
-                setTransactions(data);
+                const response = await transactionAPI.getTransactions();
+                console.log('Transactions API Response:', response.data);
+
+                let data = response.data;
+                if (data && !Array.isArray(data)) {
+                    if (Array.isArray(data.results)) data = data.results;
+                    else if (Array.isArray(data.transactions)) data = data.transactions;
+                    else if (Array.isArray(data.data)) data = data.data;
+                }
+
+                setTransactions(Array.isArray(data) ? data : []);
             } catch (err) {
                 console.error('Error fetching transactions', err);
-                // Mock data for demo if API fails
-                setTransactions(mockTransactions);
+                setTransactions([]);
             } finally {
                 setIsLoading(false);
             }
@@ -105,7 +113,7 @@ const TransactionHistory = () => {
                     <div className="p-12 text-center text-gray-500">Chargement...</div>
                 ) : (
                     <div className="divide-y divide-gray-100">
-                        {transactions
+                        {Array.isArray(transactions) && transactions
                             .filter(t => {
                                 const matchesFilter = filter === 'ALL' || t.status === filter;
                                 const matchesSearch = (t.reference?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||

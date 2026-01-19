@@ -1,26 +1,36 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { FiSend, FiSmartphone, FiInfo, FiArrowLeft, FiArrowRight, FiCheck } from 'react-icons/fi';
+import { FiSend, FiSmartphone, FiInfo, FiArrowLeft, FiArrowRight, FiCheck, FiAlertTriangle } from 'react-icons/fi';
 import { networkAPI } from '../../api/network.api';
 import { transactionAPI } from '../../api/transaction.api';
 
-// Network Logos
-import mtnLogo from '../../assets/Mtn_Benin.jpg';
-import moovLogo from '../../assets/Moov_Benin.jpg';
-import celtiisLogo from '../../assets/Celtiis_Benin.jpg';
-
-const networkLogos = {
-    'MTN_BJ': mtnLogo,
-    'MOOV_BJ': moovLogo,
-    'CELTIIS_BJ': celtiisLogo
+// Network Logos Logic
+const LOGO_MAPPING = {
+    'MTN': 'https://upload.wikimedia.org/wikipedia/commons/9/93/New-mtn-logo.jpg',
+    'MOOV': 'https://upload.wikimedia.org/wikipedia/commons/2/22/Moov_Africa_logo.png',
+    'ORANGE': 'https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg',
+    'WAVE': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Wave_logo.svg/1200px-Wave_logo.svg.png',
+    'CELTIIS': 'https://pbs.twimg.com/profile_images/1583486303038685186/tnk-aQq__400x400.jpg'
 };
 
-const DEFAULT_NETWORKS = [
-    { id: 1, name: 'MTN Benin', code: 'MTN_BJ' },
-    { id: 2, name: 'Moov Benin', code: 'MOOV_BJ' },
-    { id: 3, name: 'Celtiis', code: 'CELTIIS_BJ' }
-];
+const getNetworkLogo = (network) => {
+    if (!network) return null;
+    if (network.logo) return network.logo;
+
+    // Fallback based on code or name
+    const code = network.code?.toUpperCase() || '';
+    const name = network.name?.toUpperCase() || '';
+
+    if (code.includes('MTN') || name.includes('MTN')) return LOGO_MAPPING.MTN;
+    if (code.includes('MOOV') || name.includes('MOOV')) return LOGO_MAPPING.MOOV;
+    if (code.includes('ORANGE') || name.includes('ORANGE')) return LOGO_MAPPING.ORANGE;
+    if (code.includes('WAVE') || name.includes('WAVE')) return LOGO_MAPPING.WAVE;
+    if (code.includes('CELTIIS') || name.includes('CELTIIS') || code.includes('CELTIS')) return LOGO_MAPPING.CELTIIS;
+
+    // Default fallback if we had one, or return null to show initial
+    return null;
+};
 
 const STEPS = [
     { id: 1, title: 'Expéditeur', description: 'Informations source' },
@@ -30,7 +40,7 @@ const STEPS = [
 
 const NewTransaction = () => {
     const [currentStep, setCurrentStep] = useState(1);
-    const [networks, setNetworks] = useState(DEFAULT_NETWORKS);
+    const [networks, setNetworks] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [fees, setFees] = useState(0);
@@ -74,11 +84,26 @@ const NewTransaction = () => {
     useEffect(() => {
         const fetchNetworks = async () => {
             try {
-                const data = await networkAPI.getNetworks();
-                setNetworks(data);
+                const response = await networkAPI.getNetworks();
+                console.log('Networks API Response:', response.data);
+
+                // Extract data from various possible structures
+                let data = response.data;
+                if (data && !Array.isArray(data)) {
+                    if (Array.isArray(data.results)) data = data.results;
+                    else if (Array.isArray(data.networks)) data = data.networks;
+                    else if (Array.isArray(data.data)) data = data.data;
+                }
+
+                if (Array.isArray(data)) {
+                    setNetworks(data);
+                } else {
+                    console.warn('Invalid networks list format from API');
+                    setNetworks([]);
+                }
             } catch (err) {
                 console.error('Failed to fetch networks', err);
-                setNetworks(DEFAULT_NETWORKS);
+                setNetworks([]);
             }
         };
         fetchNetworks();
@@ -117,18 +142,35 @@ const NewTransaction = () => {
         }
     };
 
-    const onSubmit = async (data) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [pendingData, setPendingData] = useState(null);
+
+    const onSubmit = (data) => {
+        setPendingData(data);
+        setIsModalOpen(true);
+    };
+
+    const handleConfirmTransaction = async () => {
+        if (!pendingData) return;
+
         setIsLoading(true);
         setError('');
 
+        // Close modal immediately or keep it open with loader? 
+        // Better to keep open or show loading state inside modal.
+        // For now, let's keep modal open and rely on isLoading state which will disable the button inside modal
+
         try {
-            const result = await transactionAPI.initiateTransaction({
-                amount: parseFloat(data.amount),
-                source_network: data.source_network,
-                source_number: data.source_number,
-                destination_network: data.destination_network,
-                destination_number: data.destination_number
+            const response = await transactionAPI.initiateTransaction({
+                amount: parseFloat(pendingData.amount),
+                source_network: pendingData.source_network,
+                source_number: pendingData.source_number,
+                dest_network: pendingData.destination_network,
+                dest_number: pendingData.destination_number
             });
+
+            const result = response.data;
+            console.log('Transaction Initiation Response:', result);
 
             if (result.payment_url) {
                 window.location.href = result.payment_url;
@@ -136,13 +178,17 @@ const NewTransaction = () => {
                 navigate('/transactions');
             }
         } catch (err) {
-            setError(err.response?.data?.error || "Échec de l'initialisation de la transaction");
+            console.error('Transaction Error:', err.response?.data);
+            const errorMessage = err.response?.data?.error || err.response?.data?.message || err.response?.data?.detail || "Échec de l'initialisation de la transaction";
+            setError(typeof errorMessage === 'string' ? errorMessage : JSON.stringify(errorMessage));
+            setIsModalOpen(false); // Close modal on error so user can see error message on form
         } finally {
             setIsLoading(false);
         }
     };
 
     const getNetworkName = (code) => {
+        if (!Array.isArray(networks)) return code;
         const net = networks.find(n => n.code === code);
         return net ? net.name : code;
     };
@@ -197,24 +243,34 @@ const NewTransaction = () => {
                                 <div>
                                     <label className="block text-sm font-medium text-gray-600 mb-2">Réseau Source</label>
                                     <div className="grid grid-cols-3 gap-2 md:gap-4">
-                                        {networks.map(net => (
-                                            <button
-                                                key={net.id}
-                                                type="button"
-                                                onClick={() => setValue('source_network', net.code, { shouldValidate: true })}
-                                                className={`flex flex-col items-center gap-1.5 md:gap-3 p-2 md:p-4 rounded-xl md:rounded-2xl border-2 transition-all duration-200 ${sourceNetwork === net.code
-                                                    ? 'border-primary bg-blue-50/50 shadow-md scale-[1.02]'
-                                                    : 'border-gray-100 bg-white hover:border-gray-200'
-                                                    }`}
-                                            >
-                                                <div className="w-10 h-10 md:w-14 md:h-14 rounded-full overflow-hidden border border-gray-100 shadow-sm bg-white">
-                                                    <img src={networkLogos[net.code]} alt={net.name} className="w-full h-full object-cover" />
-                                                </div>
-                                                <span className={`text-[9px] md:text-xs font-bold uppercase tracking-wider ${sourceNetwork === net.code ? 'text-primary' : 'text-gray-500'}`}>
-                                                    {net.name.split(' ')[0]}
-                                                </span>
-                                            </button>
-                                        ))}
+                                        {Array.isArray(networks) && networks.length > 0 ? (
+                                            networks.map(net => (
+                                                <button
+                                                    key={net.id || net.uid || net.code}
+                                                    type="button"
+                                                    onClick={() => setValue('source_network', net.code, { shouldValidate: true })}
+                                                    className={`flex flex-col items-center gap-1.5 md:gap-3 p-2 md:p-4 rounded-xl md:rounded-2xl border-2 transition-all duration-200 ${sourceNetwork === net.code
+                                                        ? 'border-primary bg-blue-50/50 shadow-md scale-[1.02]'
+                                                        : 'border-gray-100 bg-white hover:border-gray-200'
+                                                        }`}
+                                                >
+                                                    <div className="w-10 h-10 md:w-14 md:h-14 rounded-full overflow-hidden border border-gray-100 shadow-sm bg-white flex items-center justify-center">
+                                                        {getNetworkLogo(net) ? (
+                                                            <img src={getNetworkLogo(net)} alt={net.name} className="w-full h-full object-cover" />
+                                                        ) : (
+                                                            <span className="text-sm md:text-lg font-bold text-primary">{net.name?.charAt(0)}</span>
+                                                        )}
+                                                    </div>
+                                                    <span className={`text-[9px] md:text-xs font-bold uppercase tracking-wider ${sourceNetwork === net.code ? 'text-primary' : 'text-gray-500'}`}>
+                                                        {net.name.split(' ')[0]}
+                                                    </span>
+                                                </button>
+                                            ))
+                                        ) : (
+                                            <div className="col-span-3 py-8 text-center bg-gray-50 rounded-2xl border border-dashed border-gray-200">
+                                                <p className="text-gray-400 text-sm">Aucun réseau disponible pour le moment.</p>
+                                            </div>
+                                        )}
                                     </div>
                                     <input type="hidden" {...register('source_network', { required: 'Veuillez choisir un réseau' })} />
                                     {errors.source_network && <span className="text-red-500 text-xs mt-2 block">{errors.source_network.message}</span>}
@@ -268,24 +324,34 @@ const NewTransaction = () => {
                                 <div>
                                     <label className="block text-sm font-medium text-gray-600 mb-2">Réseau Destination</label>
                                     <div className="grid grid-cols-3 gap-2 md:gap-4">
-                                        {networks.map(net => (
-                                            <button
-                                                key={net.id}
-                                                type="button"
-                                                onClick={() => setValue('destination_network', net.code, { shouldValidate: true })}
-                                                className={`flex flex-col items-center gap-1.5 md:gap-3 p-2 md:p-4 rounded-xl md:rounded-2xl border-2 transition-all duration-200 ${destNetwork === net.code
-                                                    ? 'border-purple-600 bg-purple-50 shadow-md scale-[1.02]'
-                                                    : 'border-gray-100 bg-white hover:border-gray-200'
-                                                    }`}
-                                            >
-                                                <div className="w-10 h-10 md:w-14 md:h-14 rounded-full overflow-hidden border border-gray-100 shadow-sm bg-white">
-                                                    <img src={networkLogos[net.code]} alt={net.name} className="w-full h-full object-cover" />
-                                                </div>
-                                                <span className={`text-[9px] md:text-xs font-bold uppercase tracking-wider ${destNetwork === net.code ? 'text-purple-700' : 'text-gray-500'}`}>
-                                                    {net.name.split(' ')[0]}
-                                                </span>
-                                            </button>
-                                        ))}
+                                        {Array.isArray(networks) && networks.length > 0 ? (
+                                            networks.map(net => (
+                                                <button
+                                                    key={net.id}
+                                                    type="button"
+                                                    onClick={() => setValue('destination_network', net.code, { shouldValidate: true })}
+                                                    className={`flex flex-col items-center gap-1.5 md:gap-3 p-2 md:p-4 rounded-xl md:rounded-2xl border-2 transition-all duration-200 ${destNetwork === net.code
+                                                        ? 'border-purple-600 bg-purple-50 shadow-md scale-[1.02]'
+                                                        : 'border-gray-100 bg-white hover:border-gray-200'
+                                                        }`}
+                                                >
+                                                    <div className="w-10 h-10 md:w-14 md:h-14 rounded-full overflow-hidden border border-gray-100 shadow-sm bg-white flex items-center justify-center">
+                                                        {getNetworkLogo(net) ? (
+                                                            <img src={getNetworkLogo(net)} alt={net.name} className="w-full h-full object-cover" />
+                                                        ) : (
+                                                            <span className="text-sm md:text-lg font-bold text-primary">{net.name?.charAt(0)}</span>
+                                                        )}
+                                                    </div>
+                                                    <span className={`text-[9px] md:text-xs font-bold uppercase tracking-wider ${destNetwork === net.code ? 'text-purple-700' : 'text-gray-500'}`}>
+                                                        {net.name.split(' ')[0]}
+                                                    </span>
+                                                </button>
+                                            ))
+                                        ) : (
+                                            <div className="col-span-3 py-8 text-center bg-gray-50 rounded-2xl border border-dashed border-gray-200">
+                                                <p className="text-gray-400 text-sm">Aucun réseau disponible pour le moment.</p>
+                                            </div>
+                                        )}
                                     </div>
                                     <input type="hidden" {...register('destination_network', { required: 'Veuillez choisir un réseau' })} />
                                     {errors.destination_network && <span className="text-red-500 text-xs mt-2 block">{errors.destination_network.message}</span>}
@@ -425,6 +491,50 @@ const NewTransaction = () => {
                     </form>
                 </div>
             </div>
+
+            {/* Confirmation Modal */}
+            {isModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+                    <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 animate-fade-in relative">
+                        <div className="flex flex-col items-center text-center">
+                            <div className="w-16 h-16 bg-amber-100 text-amber-500 rounded-full flex items-center justify-center mb-4">
+                                <FiAlertTriangle size={32} />
+                            </div>
+
+                            <h3 className="text-xl font-bold text-gray-900 mb-2">Attention !</h3>
+                            <p className="text-gray-600 mb-6">
+                                Une transaction ne peut être annulée après confirmation. Êtes-vous sûr de vouloir continuer ?
+                            </p>
+
+                            <div className="flex flex-col gap-3 w-full">
+                                <button
+                                    onClick={handleConfirmTransaction}
+                                    disabled={isLoading}
+                                    className="w-full bg-primary hover:bg-primary-hover text-white font-bold py-3 rounded-xl shadow-lg shadow-blue-200 transition-all flex items-center justify-center gap-2"
+                                >
+                                    {isLoading ? (
+                                        <>
+                                            <FiSend className="animate-spin" />
+                                            <span>Traitement...</span>
+                                        </>
+                                    ) : (
+                                        <span>Confirmer</span>
+                                    )}
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        if (!isLoading) setIsModalOpen(false);
+                                    }}
+                                    disabled={isLoading}
+                                    className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 rounded-xl transition-colors"
+                                >
+                                    Annuler
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

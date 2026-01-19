@@ -1,21 +1,51 @@
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FiSend, FiList, FiTrendingUp, FiCheckCircle, FiClock } from 'react-icons/fi';
-import StatisticsCard from '../components/dashboard/StatisticsCard';
+// import StatisticsCard from '../components/dashboard/StatisticsCard';
 import RecentTransactions from '../components/dashboard/RecentTransactions';
 import AdCarousel from '../components/common/AdCarousel';
 import SupportCard from '../components/dashboard/SupportCard';
-import { getRecentTransactions, mockBanners } from '../utils/mockData';
+import { transactionAPI } from '../api/transaction.api';
+import { mockBanners } from '../utils/mockData';
 
 const Dashboard = () => {
-    // Mock data - to be replaced with API call
-    const stats = {
-        totalSent: '150 000 FCFA',
-        transactionsCount: 12,
-        successRate: '98%',
-        pendingCount: 2
-    };
+    const [stats, setStats] = useState({
+        totalSent: '0 FCFA',
+        transactionsCount: 0,
+        successRate: '0%',
+        pendingCount: 0
+    });
+    const [recentTransactions, setRecentTransactions] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
-    const recentTransactions = getRecentTransactions(5);
+    useEffect(() => {
+        const fetchDashboardData = async () => {
+            try {
+                const [statsRes, transRes] = await Promise.all([
+                    transactionAPI.getUserStatistics(),
+                    transactionAPI.getTransactions({ limit: 5 })
+                ]);
+
+                if (statsRes.data) {
+                    setStats({
+                        totalSent: `${statsRes.data.total_amount || 0} FCFA`,
+                        transactionsCount: statsRes.data.total_count || 0,
+                        successRate: `${statsRes.data.success_rate || 0}%`,
+                        pendingCount: statsRes.data.pending_count || 0
+                    });
+                }
+
+                const transData = transRes.data;
+                const transactions = Array.isArray(transData) ? transData : (transData?.results || []);
+                setRecentTransactions(transactions.slice(0, 5));
+            } catch (err) {
+                console.error("Dashboard fetch error:", err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchDashboardData();
+    }, []);
 
     return (
         <div className="space-y-6">
@@ -36,7 +66,7 @@ const Dashboard = () => {
             </div>
 
             {/* Statistics */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
+            {/* <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
                 <StatisticsCard
                     title="Total Envoyé"
                     value={stats.totalSent}
@@ -61,12 +91,19 @@ const Dashboard = () => {
                     icon={FiClock}
                     color="orange"
                 />
-            </div>
+            </div> */}
 
             {/* Recent Activity Section */}
+            <h1 className="text-lg font-bold text-gray-800 truncate">Transactions récentes</h1>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
                 <div className="lg:col-span-2">
-                    <RecentTransactions transactions={recentTransactions} />
+                    {isLoading ? (
+                        <div className="bg-white p-12 rounded-2xl shadow-sm border border-gray-100 text-center text-gray-400">
+                            Chargement des activités...
+                        </div>
+                    ) : (
+                        <RecentTransactions transactions={recentTransactions} />
+                    )}
                 </div>
 
                 <div className="hidden lg:flex flex-col gap-6 h-full">

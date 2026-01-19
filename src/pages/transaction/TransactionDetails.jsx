@@ -23,8 +23,9 @@ const TransactionDetails = () => {
                     setTransaction(found);
                 } else {
                     // If not found in mock, try API (mock implementation usually returns list)
-                    const data = await transactionAPI.getTransactions();
-                    const apiFound = data.find(t => t.uid.toString() === id || t.reference === id);
+                    const response = await transactionAPI.getTransactions();
+                    const data = response.data;
+                    const apiFound = Array.isArray(data) ? data.find(t => t.uid.toString() === id || t.reference === id) : null;
                     setTransaction(apiFound);
                 }
             } catch (err) {
